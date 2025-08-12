@@ -1,0 +1,12 @@
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+.nav-links ul{
+display: flex;
+justify-content: space-between;
+column-gap: 30px;
+list-style: none;
+}

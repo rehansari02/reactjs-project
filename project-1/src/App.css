@@ -1,0 +1,237 @@
+
+
+
+
+
+
+
+
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.logo img {
+  margin-top: 1vw;
+  width: 5vw;
+}
+
+/* Social Icons */
+.social ul {
+  padding: 0;
+  margin: 0;
+}
+
+.social ul li {
+  display: inline-block;
+  margin-left: 2vw;
+}
+
+.social ul li a {
+  color: black;
+  text-decoration: none;
+}
+
+/* Button */
+.button button {
+  padding: 0.5vw 1vw;
+  color: white;
+  background-color: rgb(232, 67, 67);
+  font-size: 1.1vw;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+/* herosec */
+
+
+.herosection{
+  height: 80%;
+  width: 87%;
+  margin: 10px 105px;
+  padding: 20px;
+  display: flex;
+  position: relative;
+}
+
+.herosection .hero-content{
+  width: 50%;
+}
+
+.hero-content h1{
+  font-size: 6vw;
+  line-height: 1;
+  font-weight: 800;
+}
+.hero-content p{
+   font-size: 1.5vw;
+}
+
+.hero-content button {
+  padding: 0.5vw 1vw;
+  color: white;
+  background-color: rgb(232, 67, 67);
+  font-size: 1.1vw;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.hero-content .btn2 {
+  padding: 0.5vw 1vw;
+  margin-left:1vw ;
+  color: gray;
+  background-color: rgb(255, 255, 255);
+  font-size: 1.1vw;
+  border: 1px solid gray;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.social-logo{
+  display: flex;
+}
+.social-logo img{
+  height: 30px ;
+  margin-left: 1vw;
+}
+
+.hero-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+
+}
+.hero-img img{
+  height: 400px;
+ 
+}
+
+
+
+
+
+
+
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .herosection {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .herosection .hero-content,
+  .hero-img {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 8vw;
+  }
+
+  .hero-content p {
+    font-size: 2.5vw;
+  }
+
+  .hero-img img {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .logo img {
+    width: 25vw;
+    margin-top: 2vw;
+  }
+
+  .social ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social ul li {
+    margin: 5px;
+  }
+
+  .button button {
+    font-size: 3vw;
+    padding: 2vw 4vw;
+    margin-top: 10px;
+  }
+
+  .herosection {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 10vw;
+  }
+
+  .hero-content p {
+    font-size: 3vw;
+  }
+
+  .hero-content button,
+  .hero-content .btn2 {
+    font-size: 3vw;
+    padding: 2vw 4vw;
+    margin: 5px;
+  }
+
+  .hero-img img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 12vw;
+  }
+
+  .hero-content p {
+    font-size: 4vw;
+  }
+
+  .hero-img img {
+    height: 200px;
+  }
+
+  .social-logo img {
+    height: 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
