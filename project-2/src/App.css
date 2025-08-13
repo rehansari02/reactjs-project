@@ -1,12 +1,164 @@
-nav{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
+/* Reset & Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-.nav-links ul{
-display: flex;
-justify-content: space-between;
-column-gap: 30px;
-list-style: none;
+html, body {
+  height: 100%;
+  width: 100%;
 }
+.container {
+  height: 100vh;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  padding: 0 50px;
+}
+
+.nav-links ul {
+  display: flex;
+  column-gap: 30px;
+  list-style: none;
+}
+
+/* Contact Header */
+.main {
+  padding: 20px 80px;
+  margin-top: 20px;
+}
+.main h1 {
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 2;
+}
+.main p {
+  line-height: 1.5;
+  font-size: 14px;
+  width: 90%;
+}
+
+/* Section Layout */
+section {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 20px 80px;
+}
+
+/* Buttons */
+.btns {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button span {
+  display: flex;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #222;
+}
+
+/* Outline Button */
+.outline {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 10px 18px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.outline:hover {
+  background-color: black;
+  color: white;
+}
+
+/* Form Fields */
+form {
+  margin-top: 20px;
+}
+
+.form-group {
+  position: relative;
+  margin-top: 20px;
+  width: 300px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+label {
+  position: absolute;
+  left: 12px;
+  top: -8px;
+  color: black;
+  background: white;
+  padding: 0 4px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+input:focus {
+  border-color: black;
+}
+
+textarea {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+
+section form .submit{
+    margin-top: 10px;
+}
+
+
+
+/* Image */
+section img {
+  height: 400px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+
+
