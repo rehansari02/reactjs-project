@@ -4,12 +4,9 @@ import StartGame from "./components/StartGame";
 import Play from "./components/Play";
 
 function App() {
-  let [start, setStart] = useState(false);
-  let play = () => {
-    setStart(true);
-  };
+  const [start, setStart] = useState(false);
 
-  return <>{start ? <Play /> : <StartGame setdata={play} />}</>;
+  return <>{start ? <Play /> : <StartGame setdata={() => setStart(true)} />}</>;
 }
 
 export default App;

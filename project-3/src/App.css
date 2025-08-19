@@ -12,8 +12,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-
-/* startingggg */
+/* starting screen */
 .start {
   height: 100vh;
   width: 100%;
@@ -60,22 +59,20 @@ body {
   color: #000000;
 }
 
-
-
-/* games play */
-
-/* score */
-
-.gameplay{
-   height: 100vh;
+/* gameplay screen */
+.gameplay {
+  height: 100vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.gameplay .nav-score{
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 40px;
+.gameplay .nav-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  gap: 20px;
 }
 
 .gameplay .nav-score h1 {
@@ -90,7 +87,7 @@ padding: 40px;
   font-weight: 700;
 }
 
-.gameplay .number-button{
+.gameplay .number-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,13 +95,17 @@ padding: 40px;
   width: 50px;
   font-size: 20px;
   font-weight: 600;
+  border: 2px solid black;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.gameplay .number-button:active{
- background: #000;
- color: white;
+.gameplay .number-button.active {
+  background: #000;
+  color: white;
 }
-
 
 .gameplay .select {
   text-align: center;
@@ -113,15 +114,71 @@ padding: 40px;
   margin-top: 5px;
 }
 
+/* dice section */
+.rolldice {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  text-align: center;
+}
 
+.rolldice img {
+  height: 150px;
+}
 
+.rolldice p {
+  font-size: 20px;
+  font-weight: 600;
+}
 
+.rolldice #reset {
+  padding: 7px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
 
+.rolldice button {
+  padding: 7px 30px;
+  font-size: 18px;
+  font-weight: 400;
+  border: none;
+  border-radius: 5px;
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
 
+.rolldice button:hover {
+  opacity: 0.8;
+}
 
-
-
-
+/* rules section */
+.rules {
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  text-align: left;
+  row-gap: 10px;
+  border: 2px dashed black;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 50px;
+}
 
 /* -------------------
    Responsive Styles
@@ -148,6 +205,21 @@ padding: 40px;
     font-size: 18px;
     padding: 8px 16px;
   }
+
+  .gameplay .nav-score {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .gameplay .number-button {
+    height: 45px;
+    width: 45px;
+    font-size: 18px;
+  }
+
+  .rolldice img {
+    height: 120px;
+  }
 }
 
 /* Mobile screens */
@@ -170,5 +242,39 @@ padding: 40px;
   .play button {
     font-size: 16px;
     padding: 8px 14px;
+  }
+
+  .gameplay .nav-score {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .gameplay .nav-score h1 {
+    font-size: 32px;
+  }
+
+  .gameplay .number-button {
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+  }
+
+  .rolldice img {
+    height: 100px;
+  }
+
+  .rolldice p {
+    font-size: 16px;
+  }
+
+  .rolldice button {
+    font-size: 16px;
+    padding: 6px 16px;
+  }
+
+  .rules {
+    font-size: 14px;
+    padding: 15px;
   }
 }

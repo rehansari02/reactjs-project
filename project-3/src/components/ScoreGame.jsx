@@ -1,13 +1,11 @@
 import React from "react";
 
-function ScoreGame() {
+function ScoreGame({ score }) {
   return (
-    <>
-      <div className="score">
-        <h1>0</h1>
-        <h3>Total Score</h3>
-      </div>
-    </>
+    <div className="score">
+      <h1>{score}</h1>
+      <h3>Total Score</h3>
+    </div>
   );
 }
 
