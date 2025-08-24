@@ -1,0 +1,193 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  min-height: 100%;
+  width: 100%;
+  background-color: #323334;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* navbar */
+nav {
+  height: 150px;
+  width: 100%;
+  background-color: #323334;
+}
+
+.nav-part1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 80px;
+}
+
+nav img {
+  height: 2vw;
+}
+
+nav input {
+  height: 2.4vw;
+  width: 20vw;
+  border-radius: 0.5vw;
+  padding-left: 1vw;
+  border: 1px solid red;
+  background-color: transparent;
+  color: white;
+  font-size: 1.2vw;
+}
+
+.nav-part2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 15px;
+}
+
+.nav-part2 button {
+  height: 2.4vw;
+  width: 6vw;
+  border-radius: 0.5vw;
+  border: none;
+  background-color: rgb(207, 7, 7);
+  color: white;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-part2 button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+/* foods container */
+.foodcontainer {
+  min-height: calc(100vh - 150px);
+  width: 100%;
+  background-image: url("./assets/bg.png");
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;             
+  padding: 20px;
+}
+
+/* Food Card */
+.foodCard {
+  background: rgba(255, 255, 255, 0.1);
+  width: 350px;
+  height: 180px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+
+.foodCard:hover {
+  transform: scale(1.05);
+}
+
+.foodCard img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.foodContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.foodCard h2 {
+  font-size: 16px;
+  color: white;
+}
+
+.foodCard p {
+  font-size: 14px;
+  color: white;
+  opacity: 0.8;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: rgb(207, 7, 7);
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 576px) {
+  nav {
+    height: auto;
+    padding: 20px;
+  }
+
+  .nav-part1 {
+    flex-direction: column;
+    padding: 20px;
+    row-gap: 15px;
+  }
+
+  nav img {
+    height: 8vw;
+  }
+
+  nav input {
+    width: 80vw;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .nav-part2 {
+   display: none;
+  }
+
+
+
+  .foodCard {
+    width: 100%; 
+    flex-direction: column; 
+    height: auto; 
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .foodCard img {
+    width: 80%;
+    height: auto;
+  }
+
+  .foodContent {
+    width: 100%;
+    align-items: center;
+  }
+
+  .price {
+    align-self: center;
+  }
+}
