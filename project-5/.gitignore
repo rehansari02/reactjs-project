@@ -6,9 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-.env
 
+.env
 node_modules
+.pnp
+.pnp.js
+# Testing
+coverage
 dist
 dist-ssr
 *.local
@@ -23,3 +27,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.env
+
+
+
+
+
