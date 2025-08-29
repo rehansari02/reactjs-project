@@ -1,7 +1,12 @@
 import React from "react";
+import SupportLayout from "../../components/SupportLayout";
 
 function Support() {
-  return <div>Support</div>;
+  return (
+    <>
+      <SupportLayout />
+    </>
+  );
 }
 
 export default Support;
