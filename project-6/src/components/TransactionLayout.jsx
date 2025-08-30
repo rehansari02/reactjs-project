@@ -68,23 +68,23 @@ function TransactionLayout() {
         <ExportButton />
       </div>
 
-      {/* Data Section */}
-      <div className="w-full bg-white rounded-2xl shadow">
+      {/* Card Wrapper */}
+      <div className="w-full bg-white rounded-2xl shadow-md overflow-hidden">
         {/* Header + Filters */}
-        <div className="headTransac flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 h-auto sm:h-[70px] border-b border-gray-200 px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-b border-gray-200 px-4 py-3">
           <HeadTransaction />
         </div>
 
         {/* Table */}
-        <div className="table overflow-y-auto max-h-[530px] w-full overflow-x-auto">
+        <div className="overflow-x-auto max-h-[530px]">
           <table className="min-w-full border-collapse">
-            <thead className="bg-gray-50 sticky top-0 z-10">
+            <thead className="bg-gray-50 sticky top-0 z-10 shadow-sm">
               <tr>
                 {["Transaction ID", "Date", "Type", "Amount", "Status"].map(
                   (heading) => (
                     <th
                       key={heading}
-                      className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                      className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wide"
                     >
                       {heading}
                     </th>
@@ -97,23 +97,37 @@ function TransactionLayout() {
               {tableData.map((row) => (
                 <tr
                   key={row.id}
-                  className="hover:bg-gray-50 transition-colors duration-200"
+                  className="hover:bg-gray-50 transition-colors duration-150"
                 >
-                  <td className="px-4 py-3 whitespace-nowrap">{row.id}</td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    {row.date}
-                    <br />
-                    <span className="text-gray-500">{row.time}</span>
+                  {/* Transaction ID */}
+                  <td className="px-4 py-3 whitespace-nowrap font-medium text-gray-700">
+                    {row.id}
                   </td>
+
+                  {/* Date + Time */}
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <div className="font-medium">{row.type.name}</div>
+                    <div>{row.date}</div>
+                    <div className="text-gray-500 text-xs">{row.time}</div>
+                  </td>
+
+                  {/* Type */}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <div className="font-medium text-gray-800">
+                      {row.type.name}
+                    </div>
                     {row.type.tag && (
                       <div className="text-gray-500 text-xs">
                         {row.type.tag}
                       </div>
                     )}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap">{row.amount}</td>
+
+                  {/* Amount */}
+                  <td className="px-4 py-3 whitespace-nowrap font-medium text-gray-700">
+                    {row.amount}
+                  </td>
+
+                  {/* Status */}
                   <td className="px-4 py-3 whitespace-nowrap">
                     <span
                       className={`px-3 py-1 inline-flex text-xs font-semibold rounded-full text-white ${
