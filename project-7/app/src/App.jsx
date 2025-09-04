@@ -8,6 +8,7 @@ function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
   const noNavbarRoutes = [
     "/signup",
     "/signin",
@@ -17,7 +18,10 @@ function App() {
     "/forgot-success",
     "/reset-success",
     "/reset-password",
+    "/email-verify/:token",
+    "*", // 👈 error page bhi add kar diya
   ];
+
   return (
     <div className="flex">
       {/* Sidebar */}
@@ -29,7 +33,7 @@ function App() {
           <TopNav toggleSidebar={toggleSidebar} />
         )}
 
-        <div className="flex-1 p-5 md:p-7 overflow-auto bg-[#EEEEF4]  ">
+        <div className="flex-1 p-5 md:p-7 overflow-auto bg-[#EEEEF4]">
           <Outlet />
         </div>
       </div>

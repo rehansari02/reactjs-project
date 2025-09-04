@@ -5,13 +5,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { FRONTEND_URL, JWT_KEY, transporter } from "../config";
 import nodemailer from "nodemailer";
+
 export const signupUser: RequestHandler = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return next(createHttpError(422, "Email Already Exist!"));
-
     const hashedPassword = await bcrypt.hash(password, 8);
     const user = new User({
       firstName,
@@ -63,8 +63,10 @@ export const signinUser: RequestHandler = async (req, res, next) => {
   }
 };
 
+// controllers/user.ts
 export const sendVerificationMail: RequestHandler = async (req, res, next) => {
   const { email }: { email: string } = req.body;
+
   try {
     const user = await User.findOne({ email });
     if (!user) return next(createHttpError(404, "Email Not Valid!"));
@@ -72,31 +74,31 @@ export const sendVerificationMail: RequestHandler = async (req, res, next) => {
     if (user.isUserVerified)
       return next(createHttpError(406, "User already verified"));
 
-    const encryptedToken = await bcrypt.hash(user._id.toString(), 8);
-
     const jwtToken = jwt.sign({ userId: user._id }, JWT_KEY, {
       expiresIn: "60m",
     });
 
+    // send email with link
     let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <anshuraj@dosomecoding.com>', // sender address
-      to: `${email}`, // list of receivers
-      subject: "For Email Verification", // Subject line
-      // text: "Hello world?", // plain text body
-      html: `Your Verification Link <a href="${FRONTEND_URL}/email-verify/${jwtToken}">Link</a>`, // html body
+      from: '"Fred Foo 👻" <your-email@gmail.com>',
+      to: email,
+      subject: "Email Verification",
+      html: `Click to verify: <a href="${FRONTEND_URL}/email-verify/${jwtToken}">Verify Email</a>`,
     });
 
-    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // store token in DB (optional)
+    await user.updateOne({ $set: { verifyToken: jwtToken } });
 
-    await user.updateOne({ $set: { verifyToken: encryptedToken } });
     res.json({
-      message: `Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`,
+      message: "Verification email sent!",
+      token: jwtToken, // <-- frontend ke liye token bhej rahe
     });
   } catch (error) {
     console.log(error);
     return next(InternalServerError);
   }
 };
+
 
 export const verifyUserMail: RequestHandler = async (req, res, next) => {
   const { token }: { token: string } = req.body;
@@ -148,11 +150,13 @@ export const sendForgotPasswordMail: RequestHandler = async (
 
     res.json({
       message: `Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`,
+      token: jwtToken
     });
   } catch (error) {
     return next(InternalServerError);
   }
 };
+
 export const verifyForgotMail: RequestHandler = async (req, res, next) => {
   const { token, password }: { token: string; password: string } = req.body;
 

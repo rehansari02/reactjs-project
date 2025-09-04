@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../api/config.js";
+import { useNavigate } from "react-router-dom";
 
 // Yup Schema
 const schema = yup.object().shape({
@@ -25,6 +26,8 @@ const schema = yup.object().shape({
 });
 
 function Signup() {
+  const navigate = useNavigate();
+  // formmm
   const {
     register,
     handleSubmit,
@@ -33,23 +36,48 @@ function Signup() {
     resolver: yupResolver(schema),
   });
 
+  const [popup, setPopup] = useState({ show: false, message: "", type: "" });
+
   const onSubmit = async (data) => {
     try {
-      const { repeatPassword, agree, ...submitData } = data; // repeatPassword remove
-      const response = await axios.post(
-        "http://localhost:9000/user/signup",
-        submitData
+      const { repeatPassword, agree, ...submitData } = data;
+      const response = await axios.post("/user/signup", submitData);
+
+      // ✅ Success popup
+      setPopup({ show: true, message: "Signup successful!", type: "success" });
+      setTimeout(
+        () => setPopup({ show: false, message: "", type: "" }),
+        navigate("/register-email-verify", {
+          state: { email: submitData.email },
+        }),
+        3000
       );
-      console.log("Server Response:", response.data);
-      alert("Signup successful!");
     } catch (error) {
-      console.error("Error:", error.response.data);
-      alert("Signup failed: " + error.response.data.message);
+      // ❌ Error popup
+      setPopup({
+        show: true,
+        message:
+          "Signup failed: " +
+          (error.response?.data?.message || "Something went wrong"),
+        type: "error",
+      });
+      setTimeout(() => setPopup({ show: false, message: "", type: "" }), 3000);
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-[90vh] ">
+    <div className="flex items-center justify-center h-[92vh] relative">
+      {/* ✅ Popup div */}
+      {popup.show && (
+        <div
+          className={`absolute top-3 px-6 py-3 rounded-lg shadow-lg text-white font-medium transition-all duration-300 ${
+            popup.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {popup.message}
+        </div>
+      )}
+
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-200">
         {/* Heading */}
         <h2 className="text-2xl font-bold text-black text-center">

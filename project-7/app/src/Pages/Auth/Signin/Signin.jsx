@@ -1,18 +1,78 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-function Signin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "../../../api/config.js";
+import { useAuth } from "../../../Provider/AuthProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ email, password, remember });
-    // yahan form submit ka logic add kar sakte ho
+// ✅ Validation schema
+const schema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 chars")
+    .required("Password is required"),
+  remember: yup.boolean(),
+});
+
+function Signin() {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const [popup, setPopup] = useState({ show: false, message: "", type: "" });
+
+  // context
+
+  const { login } = useAuth();
+
+  const onSubmit = async (data) => {
+    try {
+      const { remember, ...submitData } = data;
+      const response = await axios.post("/user/signin", submitData);
+      if (response.data?.token) {
+        login(response.data.token); //  context me token save
+      }
+
+      // ✅ success popup
+      setPopup({ show: true, message: "Signin successful!", type: "success" });
+      setTimeout(
+        () => setPopup({ show: false, message: "", type: "" }),
+        navigate("/"),
+        3000
+      );
+    } catch (error) {
+      setPopup({
+        show: true,
+        message:
+          "Signin failed: " +
+          (error.response?.data?.message || "Something went wrong"),
+        type: "error",
+      });
+      setTimeout(() => setPopup({ show: false, message: "", type: "" }), 3000);
+    }
   };
 
   return (
-    <div className="flex items-center justify-center h-[90vh] ">
+    <div className="flex items-center justify-center h-[90vh] relative">
+      {/* ✅ Popup div */}
+      {popup.show && (
+        <div
+          className={`absolute top-4 px-6 py-3 rounded-lg shadow-lg text-white font-medium transition-all duration-300 ${
+            popup.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {popup.message}
+        </div>
+      )}
+
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         {/* Heading */}
         <h2 className="text-2xl font-bold text-black text-center">
@@ -23,17 +83,21 @@ function Signin() {
         </p>
 
         {/* Form */}
-        <form className="mt-6" onSubmit={handleSubmit}>
+        <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
           {/* Email */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Email</label>
             <input
               type="email"
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email")}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -42,10 +106,14 @@ function Signin() {
             <input
               type="password"
               placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register("password")}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Remember & Forgot */}
@@ -53,15 +121,17 @@ function Signin() {
             <label className="flex items-center">
               <input
                 type="checkbox"
-                checked={remember}
-                onChange={(e) => setRemember(e.target.checked)}
+                {...register("remember")}
                 className="mr-2"
               />
               <span className="text-gray-700">Remember me</span>
             </label>
-            <a href="#" className="text-purple-600 hover:underline">
+            <Link
+              to="/forgot-password"
+              className="text-purple-600 hover:underline"
+            >
               Forgot Password?
-            </a>
+            </Link>
           </div>
 
           {/* Login Button */}

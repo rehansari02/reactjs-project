@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import { useAuth } from "../Provider/AuthProvider";
 
 function TopNav({ toggleSidebar }) {
   const [users, setUser] = useState(false);
   const location = useLocation();
+
+  const { logout } = useAuth();
 
   let pageName = "";
   switch (location.pathname) {
@@ -43,7 +47,12 @@ function TopNav({ toggleSidebar }) {
               <h2 className="text-lg font-semibold hover:bg-gray-100 px-2 py-1 rounded-md cursor-pointer">
                 Support
               </h2>
-              <h2 className="text-lg font-semibold text-red-600 hover:bg-gray-100 px-2 py-1 rounded-md cursor-pointer">
+              <h2
+                onClick={() => {
+                  logout();
+                }}
+                className="text-lg font-semibold text-red-600 hover:bg-gray-100 px-2 py-1 rounded-md cursor-pointer"
+              >
                 Logout
               </h2>
             </div>

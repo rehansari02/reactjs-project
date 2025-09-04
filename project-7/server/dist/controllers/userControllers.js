@@ -145,15 +145,16 @@ var signinUser = function (req, res, next) { return __awaiter(void 0, void 0, vo
     });
 }); };
 exports.signinUser = signinUser;
+// controllers/user.ts
 var sendVerificationMail = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, user, encryptedToken, jwtToken, info, error_3;
+    var email, user, jwtToken, info, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 email = req.body.email;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 6, , 7]);
+                _a.trys.push([1, 5, , 6]);
                 return [4 /*yield*/, User_1.default.findOne({ email: email })];
             case 2:
                 user = _a.sent();
@@ -161,35 +162,32 @@ var sendVerificationMail = function (req, res, next) { return __awaiter(void 0, 
                     return [2 /*return*/, next((0, http_errors_1.default)(404, "Email Not Valid!"))];
                 if (user.isUserVerified)
                     return [2 /*return*/, next((0, http_errors_1.default)(406, "User already verified"))];
-                return [4 /*yield*/, bcrypt_1.default.hash(user._id.toString(), 8)];
-            case 3:
-                encryptedToken = _a.sent();
                 jwtToken = jsonwebtoken_1.default.sign({ userId: user._id }, config_1.JWT_KEY, {
                     expiresIn: "60m",
                 });
                 return [4 /*yield*/, config_1.transporter.sendMail({
-                        from: '"Fred Foo 👻" <anshuraj@dosomecoding.com>',
-                        to: "".concat(email),
-                        subject: "For Email Verification",
-                        // text: "Hello world?", // plain text body
-                        html: "Your Verification Link <a href=\"".concat(config_1.FRONTEND_URL, "/email-verify/").concat(jwtToken, "\">Link</a>"), // html body
+                        from: '"Fred Foo 👻" <your-email@gmail.com>',
+                        to: email,
+                        subject: "Email Verification",
+                        html: "Click to verify: <a href=\"".concat(config_1.FRONTEND_URL, "/email-verify/").concat(jwtToken, "\">Verify Email</a>"),
                     })];
-            case 4:
+            case 3:
                 info = _a.sent();
-                // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                return [4 /*yield*/, user.updateOne({ $set: { verifyToken: encryptedToken } })];
-            case 5:
-                // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                // store token in DB (optional)
+                return [4 /*yield*/, user.updateOne({ $set: { verifyToken: jwtToken } })];
+            case 4:
+                // store token in DB (optional)
                 _a.sent();
                 res.json({
-                    message: "Preview URL: %s ".concat(nodemailer_1.default.getTestMessageUrl(info)),
+                    message: "Verification email sent!",
+                    token: jwtToken, // <-- frontend ke liye token bhej rahe
                 });
-                return [3 /*break*/, 7];
-            case 6:
+                return [3 /*break*/, 6];
+            case 5:
                 error_3 = _a.sent();
                 console.log(error_3);
                 return [2 /*return*/, next(http_errors_1.InternalServerError)];
-            case 7: return [2 /*return*/];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
@@ -261,6 +259,7 @@ var sendForgotPasswordMail = function (req, res, next) { return __awaiter(void 0
                 _a.sent();
                 res.json({
                     message: "Preview URL: %s ".concat(nodemailer_1.default.getTestMessageUrl(info)),
+                    token: jwtToken
                 });
                 return [3 /*break*/, 7];
             case 6:

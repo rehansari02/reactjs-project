@@ -14,7 +14,7 @@ const UserSchema: Schema = new Schema({
   lastName: { type: String },
   email: { type: String, unquie: true },
   password: { type: String },
-  isUserVerified: { type: Boolean, default: false },
+  isUserVerified: { type: Boolean, default:false },
   verfiyToken: { type: String },
 });
 

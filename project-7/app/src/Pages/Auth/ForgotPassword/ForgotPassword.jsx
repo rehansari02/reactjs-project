@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../../api/config.js";
 
 // ✅ Yup validation schema
 const schema = yup.object().shape({
@@ -22,9 +23,39 @@ function ForgotPassword() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    // yahan tu backend API call kar sakta hai
+  const navigate = useNavigate();
+  const [message, setMessage] = useState(null);
+  const [type, setType] = useState("success");
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      setMessage(null);
+
+      // Backend request
+      const response = await axios.post("/user/forgot-password", {
+        email: data.email,
+      });
+
+      // ✅ Backend se token nikal rahe
+      const token = response.data.token;
+
+      setType("success");
+      setMessage("Verification email sent! Check your inbox.");
+
+      // ✅ Navigate + state me email + token
+      setTimeout(() => {
+        setMessage(null);
+        navigate("/forgot-success", { state: { email: data.email, token } });
+      }, 1000);
+    } catch (error) {
+      setType("error");
+      setMessage(error.response?.data?.message || "Something went wrong!");
+      setTimeout(() => setMessage(null), 3000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,8 +63,8 @@ function ForgotPassword() {
       <div className="p-6 rounded-2xl shadow-lg max-w-sm w-full text-start bg-white">
         {/* Back Icon */}
         <div className="flex justify-start mb-4">
-          <Link to={"/signin"}>
-            <FaArrowLeft className="text-3xl text-black font-bold cursor-pointer" />
+          <Link to="/signin">
+            <FaArrowLeft className="text-3xl text-black font-bold cursor-pointer hover:scale-120" />
           </Link>
         </div>
 
@@ -45,9 +76,21 @@ function ForgotPassword() {
           Enter your email address to reset your password
         </p>
 
+        {/* Show message */}
+        {message && (
+          <div
+            className={`mb-4 p-2 rounded-lg text-sm font-medium ${
+              type === "success"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {message}
+          </div>
+        )}
+
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Email Input */}
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -71,12 +114,16 @@ function ForgotPassword() {
             )}
           </div>
 
-          {/* Reset Button */}
           <button
             type="submit"
-            className="w-full cursor-pointer bg-purple-600 text-white py-2 rounded-lg font-medium hover:bg-purple-700 transition"
+            disabled={loading}
+            className={`w-full cursor-pointer text-white py-2 rounded-lg font-medium transition ${
+              loading
+                ? "bg-purple-400 cursor-not-allowed"
+                : "bg-purple-600 hover:bg-purple-700"
+            }`}
           >
-            Reset Password
+            {loading ? "Sending..." : "Reset Password"}
           </button>
         </form>
       </div>

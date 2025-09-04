@@ -19,9 +19,11 @@ function ResetPasswordSuccess() {
         </p>
 
         {/* Button */}
-        <button className="w-full bg-purple-600 cursor-pointer hover:bg-purple-700 text-white py-2 rounded-lg font-medium transition">
-          <Link to="/signin">Sign in</Link>
-        </button>
+        <Link to="/signin">
+          <button className="w-full bg-purple-600 cursor-pointer hover:bg-purple-700 text-white py-2 rounded-lg font-medium transition">
+            Sign in
+          </button>
+        </Link>
       </div>
     </div>
   );
