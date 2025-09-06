@@ -9,6 +9,7 @@ function Play() {
   const [currentDice, setCurrentDice] = useState(1);
 
   const rollDice = () => {
+    
     if (!selectedNumber) {
       alert("Please select a number first!");
       return;

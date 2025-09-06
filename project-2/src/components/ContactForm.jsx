@@ -8,7 +8,7 @@ function ContactForm() {
   const [data, setData] = useState({
     name: "",
     email: "",
-    text: "",
+    text: "", 
   });
 
   const [send, setSend] = useState([]);
